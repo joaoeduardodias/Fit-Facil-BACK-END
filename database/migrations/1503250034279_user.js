@@ -18,8 +18,6 @@ class UserSchema extends Schema {
 			table.string('password', 60).notNullable();
 			table.string('sexo', 9);
 			table.boolean('administrador').defautTo(false);
-			table.string('token');
-			table.timestamps('token_created_at');
 			table.timestamps();
 		});
 	}
