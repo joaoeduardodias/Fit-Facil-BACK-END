@@ -17,14 +17,7 @@ class ImagensSchema extends Schema {
 				.inTable('exercicios')
 				.onUpdate('CASCADE')
 				.onDelete('CASCADE');
-			table
-				.integer('fk_aparelhos')
-				.unsigned()
-				.notNullable()
-				.references('id')
-				.inTable('aparelhos')
-				.onUpdate('CASCADE')
-				.onDelete('CASCADE');
+
 			table.timestamps();
 		});
 	}
