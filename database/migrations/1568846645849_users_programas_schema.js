@@ -22,6 +22,8 @@ class UsersProgramasSchema extends Schema {
 				.inTable('programas')
 				.onUpdate('CASCADE')
 				.onDelete('CASCADE');
+			table.float('nota');
+			table.string('comentario');
 			table.timestamps();
 		});
 	}
