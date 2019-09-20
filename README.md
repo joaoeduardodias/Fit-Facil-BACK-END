@@ -1,28 +1,30 @@
-# Adonis API application
+# Adonis.JS API aplicação
 
-This is the boilerplate for creating an API server in AdonisJs, it comes pre-configured with.
+Este é o padrão para a criação de um servidor API no AdonisJs, vem pré-configurado com.
 
-1. Bodyparser
-2. Authentication
-3. CORS
-4. Lucid ORM
-5. Migrations and seeds
+1. Authentication
+2. CORS
+3. Lucid ORM
+4. Migrations
 
 ## Setup
 
-Use the adonis command to install the blueprint
+Configurar as variáveis de ambiente com o banco de dados MYSQL
 
-```bash
-adonis new yardstick --api-only
-```
-
-or manually clone the repo and then run `npm install`.
-
+Criar o banco de dados, chamado de fitfacil
 
 ### Migrations
 
-Run the following command to run startup migrations.
+Executar o comando adonis migration:run,para ser criado as tabelas no banco de dados.
 
-```js
-adonis migration:run
-```
+Para executar uma alteração na tabela, alterar a migration desejada;
+
+Executar o comando adonis migration:rollback, para ser deletado a tabela no banco;
+
+Executar novamente o comando adonis migration:run.
+
+## fazer
+
+Terminar a configuração para o envio de email e recuperação de senha
+Cadastro de Programas(treinos)
+Realizar todos os outros cadastros (Exercício, Imagens,Videos, Medidas )
