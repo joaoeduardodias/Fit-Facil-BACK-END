@@ -1,39 +1,50 @@
 'use strict';
 
-const { randomBytes } = require('crypto');
-const { promisify } = require('util');
-const Mail = use('Mail');
-const Env = use('Env');
-
-/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-
 const User = use('App/Models/User');
+const Mail = use('Mail');
+const crypto = require('crypto');
+const moment = require('moment');
 
 class ForgotPasswordController {
-	async Store({ request }) {
-		const email = request.input('email');
-		const user = await User.findByOrFail('email', email);
-		const random = await promisify(randomBytes)(24);
+	/**
+	 * SOLICITA A ALTERAÇÃO DE SENHA
+	 */
+	async store({ request, response }) {
+		try {
+			const email = request.input('email');
 
-		const token = random.toString('hex');
-		await user.tokens().create({
-			token,
-			type: 'forgotpassword',
-		});
+			/**
+			 * @description: findByOrFail tenta encontrar na coluna email o valor request.email.
+			 * caso não encontre, retorna um erro, caindo no catch(err)
+			 */
+			const user = await User.findByOrFail('email', email);
 
-		const resetpassword = `${Env.get('FRONT_URL')}/reset?token=${token}`;
+			user.token = crypto.randomBytes(10).toString('hex');
+			user.token_created_at = new Date();
 
-		await Mail.send(
-			'emails.forgotpassword',
-			{ username: user.username, resetpassword },
-			message => {
-				message
-					.to(user.email)
-					.from('fitfacil@gmail.com.br') // caso alguem responda caira nesse email - CRIAR O EMAIL
-					.subject(' FIT-FACIL-Recuperação de senha ');
-			},
-		);
+			await user.save();
+
+			// Envia e-mail para reset de senha
+			await Mail.send(
+				['emails.forgot_password'],
+				{
+					email,
+					token: user.token,
+					link: `${request.input('request_url')}?token${user.token}`,
+				},
+				message => {
+					message
+						.to(user.email)
+						.from('maiconrs95@gmail.com', 'Maicon | aaa')
+						.subject('Recuperação de senha');
+				},
+			);
+		} catch (err) {
+			return response.status(err.status).send({
+				error: {
+					message: 'Algo deu errado. Verifique o e-mail e tente novamente',
+				},
+			});
+		}
 	}
 }
-
-module.exports = ForgotPasswordController;

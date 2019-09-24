@@ -28,3 +28,5 @@ Executar novamente o comando adonis migration:run.
 Terminar a configuração para o envio de email e recuperação de senha
 Cadastro de Programas(treinos)
 Realizar todos os outros cadastros (Exercício, Imagens,Videos, Medidas )
+
+TERMINAR DE CONFIGURAR O ENVIO DE EMAIL PELO ADONIS
