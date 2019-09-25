@@ -1,50 +1,40 @@
 'use strict';
 
-const User = use('App/Models/User');
+const { randomBytes } = require('crypto');
+const { promisify } = require('util');
 const Mail = use('Mail');
-const crypto = require('crypto');
-const moment = require('moment');
+const Env = use('Env');
+
+/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
+
+const User = use('App/Models/User');
 
 class ForgotPasswordController {
-	/**
-	 * SOLICITA A ALTERAÇÃO DE SENHA
-	 */
-	async store({ request, response }) {
-		try {
-			const email = request.input('email');
+	async store({ request }) {
+		const email = request.input('email');
 
-			/**
-			 * @description: findByOrFail tenta encontrar na coluna email o valor request.email.
-			 * caso não encontre, retorna um erro, caindo no catch(err)
-			 */
-			const user = await User.findByOrFail('email', email);
+		const user = await User.findByOrFail('email', email);
+		const random = await promisify(randomBytes)(24);
 
-			user.token = crypto.randomBytes(10).toString('hex');
-			user.token_created_at = new Date();
+		const token = random.toString('hex');
+		await user.tokens().create({
+			token,
+			type: 'forgot_password',
+		});
 
-			await user.save();
+		const resetpassword = `${Env.get('FRONT_URL')}/reset?token=${token}`;
 
-			// Envia e-mail para reset de senha
-			await Mail.send(
-				['emails.forgot_password'],
-				{
-					email,
-					token: user.token,
-					link: `${request.input('request_url')}?token${user.token}`,
-				},
-				message => {
-					message
-						.to(user.email)
-						.from('maiconrs95@gmail.com', 'Maicon | aaa')
-						.subject('Recuperação de senha');
-				},
-			);
-		} catch (err) {
-			return response.status(err.status).send({
-				error: {
-					message: 'Algo deu errado. Verifique o e-mail e tente novamente',
-				},
-			});
-		}
+		await Mail.send(
+			'emails.forgotpassword',
+			{ name: user.username, resetpassword },
+			message => {
+				message
+					.to(user.email)
+					.from('<fitfacil@gmail.com')
+					.subject('FIT FACIL-Recuperação de senha ');
+			},
+		);
 	}
 }
+
+module.exports = ForgotPasswordController;

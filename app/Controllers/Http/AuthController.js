@@ -5,7 +5,7 @@ class AuthController {
 	async register({ request }) {
 		const data = request.only([
 			'username',
-			'eamil',
+			'email',
 			'password',
 			'sexo',
 			'administrador',
