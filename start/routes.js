@@ -1,11 +1,11 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route');
 
-Route.post('/register', 'AuthController.register');
-Route.post('/signin', 'AuthController.autenticate');
+Route.post('/register', 'AuthController.register').validator('register');
+Route.post('/signin', 'AuthController.autenticate').validator('Signin');
 
-Route.post('/forgot', 'ForgotPasswordController.store');
-Route.post('/reset', 'ResetPasswordController.store');
+Route.post('/forgot', 'ForgotPasswordController.store').validator('forgot');
+Route.post('/reset', 'ResetPasswordController.store').validator('reset');
 
 // treinos
 
