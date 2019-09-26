@@ -1,7 +1,6 @@
-'use strict';
-
 const { randomBytes } = require('crypto');
 const { promisify } = require('util');
+
 const Mail = use('Mail');
 const Env = use('Env');
 
@@ -32,7 +31,7 @@ class ForgotPasswordController {
 					.to(user.email)
 					.from('<fitfacil@gmail.com')
 					.subject('FIT FACIL-Recuperação de senha ');
-			},
+			}
 		);
 	}
 }

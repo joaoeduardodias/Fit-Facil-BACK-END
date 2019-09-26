@@ -1,4 +1,3 @@
-'use strict';
 const Programas = use('App/Models/Programa');
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
