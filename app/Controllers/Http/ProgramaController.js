@@ -17,14 +17,14 @@ class ProgramaController {
 	 * @param {Response} ctx.response
 	 * @param {View} ctx.view
 	 */
-	async indexganho({}) {
+	async indexperda({}) {
 		const prog = Programas.query()
 			.where(`fk_objetivo`, 1)
 			.fetch();
 		return prog;
 	}
 
-	async indexperda() {
+	async indexganho() {
 		const prog = Programas.query()
 			.where('fk_objetivo', 2)
 			.fetch();
@@ -34,7 +34,7 @@ class ProgramaController {
 	// nivel iniciante
 	async indexganhon1({}) {
 		const prog = Programas.query()
-			.where(`fk_objetivo`, 1)
+			.where(`fk_objetivo`, 2)
 			.andWhere(`fk_nivel`, 1)
 			.fetch();
 		return prog;
@@ -42,7 +42,7 @@ class ProgramaController {
 
 	async indexperdan1() {
 		const prog = Programas.query()
-			.where('fk_objetivo', 2)
+			.where('fk_objetivo', 1)
 			.andWhere(`fk_nivel`, 1)
 			.fetch();
 		return prog;
@@ -51,7 +51,7 @@ class ProgramaController {
 	// nivel intermediario
 	async indexganhon2({}) {
 		const prog = Programas.query()
-			.where(`fk_objetivo`, 1)
+			.where(`fk_objetivo`, 2)
 			.andWhere(`fk_nivel`, 2)
 			.fetch();
 		return prog;
@@ -59,7 +59,7 @@ class ProgramaController {
 
 	async indexperdan2() {
 		const prog = Programas.query()
-			.where('fk_objetivo', 2)
+			.where('fk_objetivo', 1)
 			.andWhere(`fk_nivel`, 2)
 			.fetch();
 		return prog;
@@ -68,7 +68,7 @@ class ProgramaController {
 
 	async indexganhon3({}) {
 		const prog = Programas.query()
-			.where(`fk_objetivo`, 1)
+			.where(`fk_objetivo`, 2)
 			.andWhere(`fk_nivel`, 3)
 			.fetch();
 		return prog;
@@ -76,7 +76,7 @@ class ProgramaController {
 
 	async indexperdan3() {
 		const prog = Programas.query()
-			.where('fk_objetivo', 2)
+			.where('fk_objetivo', 1)
 			.andWhere(`fk_nivel`, 3)
 			.fetch();
 		return prog;
@@ -92,8 +92,8 @@ class ProgramaController {
 	 */
 	async store({ request }) {
 		const data = request.only([
-			'descricao',
 			'nome',
+			'descricao',
 			'fk_objetivo',
 			'fk_nivel',
 		]);
@@ -111,8 +111,8 @@ class ProgramaController {
 	 * @param {View} ctx.view
 	 */
 	async show({ params }) {
-		const prog = Programas.finOrFail(params.nome);
-		return prog;
+		const treinos = Programas.findOrFail(params.id);
+		return treinos;
 	}
 
 	/**
@@ -124,7 +124,7 @@ class ProgramaController {
 	 * @param {Response} ctx.response
 	 */
 	async update({ params, request }) {
-		const prog = Programas.finOrFail(params.id);
+		const prog = Programas.findOrFail(params.id);
 		const data = request.only([
 			'nome',
 			'descricao',
@@ -145,7 +145,7 @@ class ProgramaController {
 	 * @param {Response} ctx.response
 	 */
 	async destroy({ params }) {
-		const prog = Programas.finOrFail(params.id);
+		const prog = Programas.findOrFail(params.id);
 		prog.delete();
 	}
 }

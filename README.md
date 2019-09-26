@@ -25,5 +25,4 @@ Executar novamente o comando adonis migration:run.
 
 ## fazer
 
-Cadastro de Programas(treinos)
 Realizar todos os outros cadastros (Exercício, Imagens,Videos, Medidas )
