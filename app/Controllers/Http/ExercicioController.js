@@ -1,10 +1,9 @@
-/* /** @typedef {import('@adonisjs/framework/src/Request')} Request */
+/** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
+/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
+const Exercicio = use('App/Models/Exercicio');
 
-/**
- * Resourceful controller for interacting with exercicios
- */
 class ExercicioController {
 	/**
 	 * Show a list of all exercicios.
@@ -15,60 +14,31 @@ class ExercicioController {
 	 * @param {Response} ctx.response
 	 * @param {View} ctx.view
 	 */
-	async index({ request, response, view }) {}
 
-	/**
-	 * Render a form to be used for creating a new exercicio.
-	 * GET exercicios/create
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 * @param {View} ctx.view
-	 */
-	async create({ request, response, view }) {}
+	async index() {
+		const exercicio = Exercicio.all();
+		return exercicio;
+	}
 
-	/**
-	 * Create/save a new exercicio.
-	 * POST exercicios
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 */
-	async store({ request, response }) {}
+	async store({ request }) {
+		const data = request.only(['exercicio', 'descricao']);
+		const exercicio = await Exercicio.create(data);
+		return exercicio;
+	}
 
-	/**
-	 * Display a single exercicio.
-	 * GET exercicios/:id
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 * @param {View} ctx.view
-	 */
-	async show({ params, request, response, view }) {}
+	async show({ params }) {
+		const exercicio = await Exercicio.findOrFail(params.id);
+		return exercicio;
+	}
 
-	/**
-	 * Render a form to update an existing exercicio.
-	 * GET exercicios/:id/edit
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 * @param {View} ctx.view
-	 */
-	async edit({ params, request, response, view }) {}
+	async update({ params, request }) {
+		const data = request.only(['exercicio', 'descricao']);
+		const exercicio = await Exercicio.find(params.id);
 
-	/**
-	 * Update exercicio details.
-	 * PUT or PATCH exercicios/:id
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 */
-	async update({ params, request, response }) {}
+		exercicio.merge(data);
+		await exercicio.save();
+		return exercicio;
+	}
 
 	/**
 	 * Delete a exercicio with id.
@@ -78,8 +48,10 @@ class ExercicioController {
 	 * @param {Request} ctx.request
 	 * @param {Response} ctx.response
 	 */
-	async destroy({ params, request, response }) {}
+	async destroy({ params }) {
+		const exercicio = Exercicio.find(params.id);
+		await exercicio.delete();
+	}
 }
 
 module.exports = ExercicioController;
- */

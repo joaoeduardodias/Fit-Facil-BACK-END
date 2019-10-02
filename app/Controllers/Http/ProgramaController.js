@@ -1,3 +1,4 @@
+/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Programas = use('App/Models/Programa');
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
@@ -123,7 +124,7 @@ class ProgramaController {
 	 * @param {Response} ctx.response
 	 */
 	async update({ params, request }) {
-		const prog = Programas.findOrFail(params.id);
+		const prog = Programas.find(params.id);
 		const data = request.only([
 			'nome',
 			'descricao',

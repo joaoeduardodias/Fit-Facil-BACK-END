@@ -24,3 +24,11 @@ Route.get('/treinoganhonivelprofissional', 'ProgramaController.indexganhon3');
 // Cadastro de novos treinos(Programas)
 
 Route.post('/createtreino', 'ProgramaController.store');
+Route.put('/treino/:id', 'ProgramaController.update');
+
+// cadastro de exercicios
+
+Route.post('/createexercicio', 'ExercicioController.store');
+Route.get('/exercicios', 'ExercicioController.index');
+Route.get('/exercicio/:id', 'ExercicioController.show');
+Route.put('/exercicioupdate/:id', 'ExercicioController.update');
