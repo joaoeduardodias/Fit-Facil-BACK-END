@@ -124,7 +124,7 @@ class ProgramaController {
 	 * @param {Response} ctx.response
 	 */
 	async update({ params, request }) {
-		const prog = Programas.find(params.id);
+		const prog = await Programas.findOrFail(params.id);
 		const data = request.only([
 			'nome',
 			'descricao',
@@ -145,7 +145,7 @@ class ProgramaController {
 	 * @param {Response} ctx.response
 	 */
 	async destroy({ params }) {
-		const prog = Programas.findOrFail(params.id);
+		const prog = await Programas.findOrFail(params.id);
 		prog.delete();
 	}
 }

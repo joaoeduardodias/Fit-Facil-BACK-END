@@ -25,8 +25,4 @@ Executar novamente o comando adonis migration:run.
 
 ## fazer
 
-descobrir o porque a funcao merge do adonis nao esta funcionando
-
-parte de listagem de treino por nivel esta pronta
-
-Realizar todos os outros cadastros (Exercício, Imagens,Videos, Medidas )
+Realizar upload de Imagens e Videos

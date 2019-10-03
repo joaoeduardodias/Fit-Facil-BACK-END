@@ -33,7 +33,7 @@ class ExercicioController {
 
 	async update({ params, request }) {
 		const data = request.only(['exercicio', 'descricao']);
-		const exercicio = await Exercicio.find(params.id);
+		const exercicio = await Exercicio.findOrFail(params.id);
 
 		exercicio.merge(data);
 		await exercicio.save();
@@ -49,7 +49,7 @@ class ExercicioController {
 	 * @param {Response} ctx.response
 	 */
 	async destroy({ params }) {
-		const exercicio = Exercicio.find(params.id);
+		const exercicio = Exercicio.findOrFail(params.id);
 		await exercicio.delete();
 	}
 }

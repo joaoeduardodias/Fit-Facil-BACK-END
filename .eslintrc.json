@@ -19,6 +19,7 @@
 		"class-methods-use-this": "off",
 		"consistent-return": "off",
 		"no-param-reassign": "off",
-		"no-empty-pattern": "off"
+		"no-empty-pattern": "off",
+		"camelcase": "off"
 	}
 }

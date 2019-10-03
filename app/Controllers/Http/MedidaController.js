@@ -1,6 +1,9 @@
-/* /** @typedef {import('@adonisjs/framework/src/Request')} Request */
+/** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 /** @typedef {import('@adonisjs/framework/src/View')} View */
+/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
+
+const Medida = use('App/Models/Medida');
 
 /**
  * Resourceful controller for interacting with medidas
@@ -15,70 +18,30 @@ class MedidaController {
 	 * @param {Response} ctx.response
 	 * @param {View} ctx.view
 	 */
-	async index({ request, response, view }) {}
+	async index() {
+		const medida = Medida.all();
+		return medida;
+	}
 
-	/**
-	 * Render a form to be used for creating a new medida.
-	 * GET medidas/create
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 * @param {View} ctx.view
-	 */
-	async create({ request, response, view }) {}
+	async store({ request, auth, response }) {
+		const data = request.only([
+			'peso',
+			'braco',
+			'peito',
+			'ombro',
+			'cintura',
+			'perna',
+			'panturrilha',
+		]);
 
-	/**
-	 * Create/save a new medida.
-	 * POST medidas
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 */
-	async store({ request, response }) {}
+		const medida = await Medida.create({ fk_user: auth.user.id, ...data });
+		return response.status(201).json(medida);
+	}
 
-	/**
-	 * Display a single medida.
-	 * GET medidas/:id
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 * @param {View} ctx.view
-	 */
-	async show({ params, request, response, view }) {}
-
-	/**
-	 * Render a form to update an existing medida.
-	 * GET medidas/:id/edit
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 * @param {View} ctx.view
-	 */
-	async edit({ params, request, response, view }) {}
-
-	/**
-	 * Update medida details.
-	 * PUT or PATCH medidas/:id
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 */
-	async update({ params, request, response }) {}
-
-	/**
-	 * Delete a medida with id.
-	 * DELETE medidas/:id
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 */
-	async destroy({ params, request, response }) {}
+	async destroy({ params }) {
+		const medida = await Medida.findOrFail(params.id);
+		medida.delete();
+	}
 }
 
-module.exports = MedidaController; */
+module.exports = MedidaController;
