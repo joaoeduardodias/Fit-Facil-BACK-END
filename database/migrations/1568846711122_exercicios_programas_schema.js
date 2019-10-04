@@ -4,6 +4,7 @@ const Schema = use('Schema');
 class ExerciciosProgramasSchema extends Schema {
 	up() {
 		this.create('exercicios_programas', table => {
+			table.increments();
 			table
 				.integer('fk_programas')
 				.unsigned()

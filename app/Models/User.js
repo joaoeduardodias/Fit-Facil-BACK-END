@@ -37,8 +37,10 @@ class User extends Model {
 		return this.hasMany('App/Models/Medida');
 	}
 
-	user_programa() {
-		return this.hasMany('App/Models/UsersPrograma');
+	mydrills() {
+		return this.belongsToMany('App/Models/Programa')
+			.pivotTable('users_programas')
+			.withTimestamps();
 	}
 }
 

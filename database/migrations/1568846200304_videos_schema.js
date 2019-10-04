@@ -8,7 +8,7 @@ class VideosSchema extends Schema {
 			table.string('caminho', 300).notNullable();
 			table.string('descricao', 200);
 			table
-				.integer('fk_exercicios')
+				.integer('fk_exercicio')
 				.unsigned()
 				.notNullable()
 				.references('id')

@@ -26,8 +26,12 @@ Route.group(() => {
 	Route.post('/createexercicio', 'ExercicioController.store');
 	Route.post('/createtreino', 'ProgramaController.store');
 	Route.put('/treino/:id', 'ProgramaController.update');
-
 	Route.get('/medida', 'MedidaController.index');
 	Route.post('/createmedida', 'MedidaController.store');
 	Route.delete('/deletemedida/:id', 'MedidaController.destroy');
+
+	Route.post(
+		'/meustreinos/:programas_id/users_programas',
+		'UsersProgramaController.store/'
+	);
 }).middleware('auth');

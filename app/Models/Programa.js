@@ -2,13 +2,15 @@
 const Model = use('Model');
 
 class Programa extends Model {
-	users_programas() {
-		return this.hasMany('App/Models/UsersPrograma');
+	usertraining() {
+		return this.belongsToMany('App/Models/User')
+			.pivotTable('users_programas')
+			.withTimestamps();
 	}
 
-	exercicios_programas() {
+	/* exercicios_programas() {
 		return this.hasMany('App/Models/ExerciciosPrograma');
-	}
+	} */
 }
 
 module.exports = Programa;
