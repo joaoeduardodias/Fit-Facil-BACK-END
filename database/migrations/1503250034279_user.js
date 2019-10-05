@@ -12,7 +12,7 @@ class UserSchema extends Schema {
 				.unique();
 			table.string('password', 60).notNullable();
 			table.string('sexo', 9);
-			table.boolean('administrador').defaultTo(false);
+			table.boolean('administrador').defaultTo(0);
 			table.timestamps();
 		});
 	}

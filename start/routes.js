@@ -32,6 +32,7 @@ Route.group(() => {
 
 	Route.post(
 		'/meustreinos/:programas_id/users_programas',
-		'UsersProgramaController.store/'
+		'UsersProgramaController.store/';
+
 	);
 }).middleware('auth');
