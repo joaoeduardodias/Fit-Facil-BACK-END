@@ -7,7 +7,6 @@ Route.post('/forgot', 'ForgotPasswordController.store').validator('forgot');
 Route.post('/reset', 'ResetPasswordController.store').validator('reset');
 
 Route.get('/treinos', 'ProgramaController.index');
-
 Route.get('/onetreino/:id', 'ProgramaController.show');
 Route.get('/treinoganho', 'ProgramaController.indexganho');
 Route.get('/treinoperda', 'ProgramaController.indexperda');
@@ -28,12 +27,10 @@ Route.group(() => {
 	Route.post('/createexercicio', 'ExercicioController.store');
 	Route.post('/createtreino', 'ProgramaController.store');
 	Route.put('/treino/:id', 'ProgramaController.update');
-	Route.delete('/treino/:id','ProgramaController.destroy');
+	Route.delete('/treino/:id', 'ProgramaController.destroy');
 	Route.get('/medida', 'MedidaController.index');
 	Route.post('/createmedida', 'MedidaController.store');
 	Route.delete('/deletemedida/:id', 'MedidaController.destroy');
-
-	// my drills
 	Route.get('/meustreinos', 'UsersProgramaController.index');
 	Route.post('/meustreinos/:id', 'UsersProgramaController.store');
 }).middleware('auth');
