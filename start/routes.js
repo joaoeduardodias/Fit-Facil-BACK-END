@@ -28,6 +28,7 @@ Route.group(() => {
 	Route.post('/createexercicio', 'ExercicioController.store');
 	Route.post('/createtreino', 'ProgramaController.store');
 	Route.put('/treino/:id', 'ProgramaController.update');
+	Route.delete('/treino/:id','ProgramaController.destroy');
 	Route.get('/medida', 'MedidaController.index');
 	Route.post('/createmedida', 'MedidaController.store');
 	Route.delete('/deletemedida/:id', 'MedidaController.destroy');

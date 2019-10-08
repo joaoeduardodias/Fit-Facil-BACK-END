@@ -25,4 +25,6 @@ Executar novamente o comando adonis migration:run.
 
 ## fazer
 
+fazer a correta listagem dos treinos(cada treino lista exercicios)
+
 Realizar upload de Imagens e Videos
