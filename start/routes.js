@@ -6,6 +6,8 @@ Route.post('/signin', 'AuthController.autenticate').validator('Signin');
 Route.post('/forgot', 'ForgotPasswordController.store').validator('forgot');
 Route.post('/reset', 'ResetPasswordController.store').validator('reset');
 
+Route.get('/treinos', 'ProgramaController.index');
+
 Route.get('/onetreino/:id', 'ProgramaController.show');
 Route.get('/treinoganho', 'ProgramaController.indexganho');
 Route.get('/treinoperda', 'ProgramaController.indexperda');

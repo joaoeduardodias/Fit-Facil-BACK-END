@@ -17,6 +17,12 @@ class ProgramaController {
 	 * @param {Response} ctx.response
 	 * @param {View} ctx.view
 	 */
+
+	async index({}) {
+		const prog = Programas.all();
+		return prog;
+	}
+
 	async indexperda({}) {
 		const prog = Programas.query()
 			.where(`fk_objetivo`, 1)
