@@ -82,14 +82,6 @@ class ProgramaController {
 		return prog;
 	}
 
-	/**
-	 * Create/save a new programa.
-	 * POST programas
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 */
 	async store({ request }) {
 		const data = request.only([
 			'nome',
@@ -101,28 +93,11 @@ class ProgramaController {
 		return prog;
 	}
 
-	/**
-	 * Display a single programa.
-	 * GET programas/:id
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 * @param {View} ctx.view
-	 */
 	async show({ params }) {
 		const treinos = Programas.findOrFail(params.id);
 		return treinos;
 	}
 
-	/**
-	 * Update programa details.
-	 * PUT or PATCH programas/:id
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 */
 	async update({ params, request }) {
 		const prog = await Programas.findOrFail(params.id);
 		const data = request.only([
@@ -136,14 +111,6 @@ class ProgramaController {
 		return prog;
 	}
 
-	/**
-	 * Delete a programa with id.
-	 * DELETE programas/:id
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 */
 	async destroy({ params }) {
 		const prog = await Programas.findOrFail(params.id);
 		prog.delete();

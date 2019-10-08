@@ -4,8 +4,8 @@ const Model = use('Model');
 class Programa extends Model {
 	usertraining() {
 		return this.belongsToMany('App/Models/User')
-			.pivotTable('users_programas')
-			.withTimestamps();
+			.pivotTable('user_programas')
+			.pivotModel('App/Models/UserPrograma');
 	}
 
 	/* exercicios_programas() {

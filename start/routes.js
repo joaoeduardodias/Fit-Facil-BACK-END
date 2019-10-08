@@ -30,9 +30,7 @@ Route.group(() => {
 	Route.post('/createmedida', 'MedidaController.store');
 	Route.delete('/deletemedida/:id', 'MedidaController.destroy');
 
-	Route.post(
-		'/meustreinos/:programas_id/users_programas',
-		'UsersProgramaController.store/';
-
-	);
+	// my drills
+	Route.get('/meustreinos', 'UsersProgramaController.index');
+	Route.post('/meustreinos/:id', 'UsersProgramaController.store');
 }).middleware('auth');

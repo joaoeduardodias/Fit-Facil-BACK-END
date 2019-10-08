@@ -39,8 +39,8 @@ class User extends Model {
 
 	mydrills() {
 		return this.belongsToMany('App/Models/Programa')
-			.pivotTable('users_programas')
-			.withTimestamps();
+			.pivotTable('user_programas')
+			.pivotModel('App/Models/UserPrograma');
 	}
 }
 
