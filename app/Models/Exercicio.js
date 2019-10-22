@@ -7,6 +7,10 @@ class Exercicio extends Model {
 			.pivotTable('exercicio_programas')
 			.pivotModel('App/Models/ExercicioPrograma');
 	}
+
+	imagens() {
+		return this.hasMany('App/Models/Imagem');
+	}
 }
 
 module.exports = Exercicio;

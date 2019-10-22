@@ -1,34 +1,28 @@
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Exercicio = use('App/Models/Exercicio');
 
 class ExercicioController {
-	/**
-	 * Show a list of all exercicios.
-	 * GET exercicios
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 * @param {View} ctx.view
-	 */
-
-	async index() {
-		const exercicio = Exercicio.all();
-		return exercicio;
+	async index({ response }) {
+		const exercicio = await Exercicio.query()
+			.select(['id', 'exercicio', 'descricao', 'agp_muscular'])
+			.with('imagens')
+			.fetch();
+		return response.status(200).json(exercicio);
 	}
 
-	async store({ request }) {
+	async store({ request, response }) {
 		const data = request.only(['exercicio', 'descricao', 'agp_muscular']);
 		const exercicio = await Exercicio.create(data);
-		return exercicio;
+		return response.status(201).json(exercicio);
 	}
 
-	async show({ params }) {
+	async show({ params, response }) {
 		const exercicio = await Exercicio.findOrFail(params.id);
-		return exercicio;
+		await exercicio.load('imagens', builder => {
+			builder.select(['id', 'path']);
+		});
+
+		return response.status(200).json(exercicio);
 	}
 
 	async update({ params, request }) {
@@ -40,16 +34,8 @@ class ExercicioController {
 		return exercicio;
 	}
 
-	/**
-	 * Delete a exercicio with id.
-	 * DELETE exercicios/:id
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 */
 	async destroy({ params }) {
-		const exercicio = Exercicio.findOrFail(params.id);
+		const exercicio = await Exercicio.findOrFail(params.id);
 		await exercicio.delete();
 	}
 }

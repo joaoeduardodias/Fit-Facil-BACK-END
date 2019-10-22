@@ -21,9 +21,14 @@ Route.get('/treinoganhonivelprofissional', 'ProgramaController.indexganhon3');
 
 Route.get('/exercicios', 'ExercicioController.index');
 Route.get('/exercicio/:id', 'ExercicioController.show');
+// retorna a imagem para o front-end
+Route.get('images/:path', 'ImageController.show');
 
 Route.group(() => {
-	Route.put('/exercicioupdate/:id', 'ExercicioController.update');
+	// add imagens ao exercicio
+	Route.post('/exe/:id/images', 'ImageController.store');
+
+	Route.put('/exeupdate/:id', 'ExercicioController.update');
 	Route.post('/createexercicio', 'ExercicioController.store');
 	Route.post('/createtreino', 'ProgramaController.store');
 	Route.put('/treino/:id', 'ProgramaController.update');

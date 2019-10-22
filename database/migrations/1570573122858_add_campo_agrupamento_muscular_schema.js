@@ -10,7 +10,7 @@ class AddCampoAgrupamentoMuscularSchema extends Schema {
 
 	down() {
 		this.table('exercicios', table => {
-			table.string('agp_muscular', 50);
+			table.dropColumn('agp_muscular');
 		});
 	}
 }
