@@ -1,24 +1,24 @@
-const Meustreinos = use('App/Models/UserPrograma');
+// const Meustreinos = use('App/Models/UserPrograma');
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Treino = use('App/Models/Programa');
 
 class UsersProgramaController {
 	async store({ response, params, auth }) {
-		const { id } = await Treino.find(params.id);
+		const user = await auth.getUser();
+		const { id } = await Treino.findOrFail(params.id);
 
-		await Meustreinos.create({
-			fk_users: auth.user.id,
-			fk_programas: id,
-		});
+		await user.mydrills().attach(id);
 
 		return response.status(201).send();
 	}
 
-	async index({ auth }) {
-		const meustreinos = Meustreinos.query()
-			.where('fk_users', auth.user.id)
-			.fetch();
-		return meustreinos;
+	async index({ auth, response }) {
+		const user = await auth.getUser();
+		await user.load('mydrills', builder => {
+			builder.select(['id', 'nome', 'descricao']);
+		});
+
+		return response.status(200).json(user);
 	}
 }
 
