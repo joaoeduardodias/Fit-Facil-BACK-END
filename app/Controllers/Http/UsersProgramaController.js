@@ -14,15 +14,12 @@ class UsersProgramaController {
 		return response.status(201).send();
 	}
 
-	async index() {
-		const mydrills = Meustreinos.all();
-		return mydrills;
+	async index({ auth }) {
+		const meustreinos = Meustreinos.query()
+			.where('fk_users', auth.user.id)
+			.fetch();
+		return meustreinos;
 	}
-
-	// DEPOIS DE 15 DIAS ENVIAR UMA NOTIFICACAO PARA O USUARIO DAR UMA NOTA E UM COMENTARIO AO TREINO
-	/* async update({ request }) {
-		const data = request.only(['nota', 'comentario']);
-	} */
 }
 
 module.exports = UsersProgramaController;

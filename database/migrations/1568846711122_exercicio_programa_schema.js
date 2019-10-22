@@ -1,12 +1,12 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema');
 
-class ExerciciosProgramasSchema extends Schema {
+class ExercicioProgramaSchema extends Schema {
 	up() {
 		this.create('exercicio_programas', table => {
 			table.increments();
 			table
-				.integer('fk_programas')
+				.integer('programa_id')
 				.unsigned()
 				.notNullable()
 				.references('id')
@@ -14,7 +14,7 @@ class ExerciciosProgramasSchema extends Schema {
 				.onUpdate('CASCADE')
 				.onDelete('CASCADE');
 			table
-				.integer('fk_exercicios')
+				.integer('exercicio_id')
 				.unsigned()
 				.notNullable()
 				.references('id')
@@ -32,4 +32,4 @@ class ExerciciosProgramasSchema extends Schema {
 	}
 }
 
-module.exports = ExerciciosProgramasSchema;
+module.exports = ExercicioProgramaSchema;

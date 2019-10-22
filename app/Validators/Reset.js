@@ -1,4 +1,8 @@
 class forgot {
+	get validateAll() {
+		return true;
+	}
+
 	get rules() {
 		return {
 			token: 'required',

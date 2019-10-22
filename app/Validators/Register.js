@@ -1,4 +1,8 @@
 class register {
+	get validateAll() {
+		return true;
+	}
+
 	get rules() {
 		return {
 			username: 'required',

@@ -21,7 +21,7 @@ class ExercicioController {
 	}
 
 	async store({ request }) {
-		const data = request.only(['exercicio', 'descricao']);
+		const data = request.only(['exercicio', 'descricao', 'agp_muscular']);
 		const exercicio = await Exercicio.create(data);
 		return exercicio;
 	}
@@ -32,7 +32,7 @@ class ExercicioController {
 	}
 
 	async update({ params, request }) {
-		const data = request.only(['exercicio', 'descricao']);
+		const data = request.only(['exercicio', 'descricao', 'agp_muscular']);
 		const exercicio = await Exercicio.findOrFail(params.id);
 
 		exercicio.merge(data);

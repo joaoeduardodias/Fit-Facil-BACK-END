@@ -8,9 +8,11 @@ class Programa extends Model {
 			.pivotModel('App/Models/UserPrograma');
 	}
 
-	/* exercicios_programas() {
-		return this.hasMany('App/Models/ExerciciosPrograma');
-	} */
+	exercicios_programas() {
+		return this.belongsToMany('App/Models/Exercicio')
+			.pivotTable('exercicio_programas')
+			.pivotModel('App/Models/ExercicioPrograma');
+	}
 }
 
 module.exports = Programa;

@@ -1,23 +1,7 @@
-/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Programas = use('App/Models/Programa');
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
+/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 
-/**
- * Resourceful controller for interacting with programas
- */
 class ProgramaController {
-	/**
-	 * Show a list of all programas.
-	 * GET programas
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 * @param {View} ctx.view
-	 */
-
 	async index({}) {
 		const prog = Programas.all();
 		return prog;
@@ -97,11 +81,6 @@ class ProgramaController {
 		]);
 		const prog = await Programas.create(data);
 		return prog;
-	}
-
-	async show({ params }) {
-		const treinos = Programas.findOrFail(params.id);
-		return treinos;
 	}
 
 	async update({ params, request }) {
