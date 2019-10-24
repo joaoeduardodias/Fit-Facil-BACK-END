@@ -25,18 +25,19 @@ class ExercicioController {
 		return response.status(200).json(exercicio);
 	}
 
-	async update({ params, request }) {
+	async update({ params, request, response }) {
 		const data = request.only(['exercicio', 'descricao', 'agp_muscular']);
 		const exercicio = await Exercicio.findOrFail(params.id);
 
 		exercicio.merge(data);
 		await exercicio.save();
-		return exercicio;
+		return response.status(201).json(exercicio);
 	}
 
-	async destroy({ params }) {
+	async destroy({ params, response }) {
 		const exercicio = await Exercicio.findOrFail(params.id);
 		await exercicio.delete();
+		return response.status(200).send();
 	}
 }
 

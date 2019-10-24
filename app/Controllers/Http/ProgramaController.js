@@ -1,78 +1,143 @@
 const Programas = use('App/Models/Programa');
-/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
+const Objetivo = use('App/Models/Objetivo');
+const Nivel = use('App/Models/Nivel');
 
 class ProgramaController {
-	async index({}) {
+	async index({ response }) {
 		const prog = Programas.all();
-		return prog;
+		return response.status(200).json(prog);
 	}
 
-	async indexperda({}) {
-		const prog = Programas.query()
-			.where(`fk_objetivo`, 1)
+	async indexperda({ response }) {
+		const obj = await Objetivo.query()
+			.where('objetivo', 'perda')
 			.fetch();
-		return prog;
+		const [{ id }] = obj.toJSON();
+		const prog = await Programas.query()
+			.where(`fk_objetivo`, id)
+			.fetch();
+		return response.status(200).json(prog);
 	}
 
-	async indexganho() {
-		const prog = Programas.query()
-			.where('fk_objetivo', 2)
+	async indexganho({ response }) {
+		const obj = await Objetivo.query()
+			.where('objetivo', 'ganho')
 			.fetch();
-		return prog;
+		const [{ id }] = obj.toJSON();
+		const prog = await Programas.query()
+			.where('fk_objetivo', id)
+			.fetch();
+
+		return response.status(200).json(prog);
 	}
 
 	// nivel iniciante
-	async indexganhon1({}) {
-		const prog = Programas.query()
-			.where(`fk_objetivo`, 2)
-			.andWhere(`fk_nivel`, 1)
+	async indexganhon1({ response }) {
+		const nivel = await Nivel.query()
+			.where('nivel', 'iniciante')
 			.fetch();
-		return prog;
+		const obj = await Objetivo.query()
+			.where('objetivo', 'ganho')
+			.fetch();
+		const [{ id: obj_id }] = obj.toJSON();
+		const [{ id: nivel_id }] = nivel.toJSON();
+
+		const prog = await Programas.query()
+			.where(`fk_objetivo`, obj_id)
+			.andWhere(`fk_nivel`, nivel_id)
+			.fetch();
+
+		return response.status(200).json(prog);
 	}
 
-	async indexperdan1() {
-		const prog = Programas.query()
-			.where('fk_objetivo', 1)
-			.andWhere(`fk_nivel`, 1)
+	async indexperdan1({ response }) {
+		const nivel = await Nivel.query()
+			.where('nivel', 'iniciante')
 			.fetch();
-		return prog;
+		const obj = await Objetivo.query()
+			.where('objetivo', 'perda')
+			.fetch();
+		const [{ id: obj_id }] = obj.toJSON();
+		const [{ id: nivel_id }] = nivel.toJSON();
+
+		const prog = await Programas.query()
+			.where('fk_objetivo', obj_id)
+			.andWhere(`fk_nivel`, nivel_id)
+			.fetch();
+		return response.status(200).json(prog);
 	}
 
 	// nivel intermediario
-	async indexganhon2({}) {
-		const prog = Programas.query()
-			.where(`fk_objetivo`, 2)
-			.andWhere(`fk_nivel`, 2)
+	async indexganhon2({ response }) {
+		const nivel = await Nivel.query()
+			.where('nivel', 'intermediario')
 			.fetch();
-		return prog;
+		const obj = await Objetivo.query()
+			.where('objetivo', 'ganho')
+			.fetch();
+		const [{ id: obj_id }] = obj.toJSON();
+		const [{ id: nivel_id }] = nivel.toJSON();
+
+		const prog = Programas.query()
+			.where(`fk_objetivo`, obj_id)
+			.andWhere(`fk_nivel`, nivel_id)
+			.fetch();
+		return response.status(200).json(prog);
 	}
 
-	async indexperdan2() {
-		const prog = Programas.query()
-			.where('fk_objetivo', 1)
-			.andWhere(`fk_nivel`, 2)
+	async indexperdan2({ response }) {
+		const nivel = await Nivel.query()
+			.where('nivel', 'iniciante')
 			.fetch();
-		return prog;
+		const obj = await Objetivo.query()
+			.where('objetivo', 'perda')
+			.fetch();
+		const [{ id: obj_id }] = obj.toJSON();
+		const [{ id: nivel_id }] = nivel.toJSON();
+
+		const prog = await Programas.query()
+			.where('fk_objetivo', obj_id)
+			.andWhere(`fk_nivel`, nivel_id)
+			.fetch();
+		return response.status(200).json(prog);
 	}
 	// nivel profissional
 
-	async indexganhon3({}) {
-		const prog = Programas.query()
-			.where(`fk_objetivo`, 2)
-			.andWhere(`fk_nivel`, 3)
+	async indexganhon3({ response }) {
+		const nivel = await Nivel.query()
+			.where('nivel', 'profissional')
 			.fetch();
-		return prog;
+		const obj = await Objetivo.query()
+			.where('objetivo', 'ganho')
+			.fetch();
+		const [{ id: obj_id }] = obj.toJSON();
+		const [{ id: nivel_id }] = nivel.toJSON();
+
+		const prog = await Programas.query()
+			.where('fk_objetivo', obj_id)
+			.andWhere(`fk_nivel`, nivel_id)
+			.fetch();
+		return response.status(200).json(prog);
 	}
 
-	async indexperdan3() {
-		const prog = Programas.query()
-			.where('fk_objetivo', 1)
-			.andWhere(`fk_nivel`, 3)
+	async indexperdan3({ response }) {
+		const nivel = await Nivel.query()
+			.where('nivel', 'profissional')
 			.fetch();
-		return prog;
+		const obj = await Objetivo.query()
+			.where('objetivo', 'perda')
+			.fetch();
+		const [{ id: obj_id }] = obj.toJSON();
+		const [{ id: nivel_id }] = nivel.toJSON();
+
+		const prog = await Programas.query()
+			.where('fk_objetivo', obj_id)
+			.andWhere(`fk_nivel`, nivel_id)
+			.fetch();
+		return response.status(200).json(prog);
 	}
 
-	async store({ request }) {
+	async store({ request, response }) {
 		const data = request.only([
 			'nome',
 			'descricao',
@@ -80,10 +145,10 @@ class ProgramaController {
 			'fk_nivel',
 		]);
 		const prog = await Programas.create(data);
-		return prog;
+		return response.status(201).json(prog);
 	}
 
-	async update({ params, request }) {
+	async update({ params, request, response }) {
 		const prog = await Programas.findOrFail(params.id);
 		const data = request.only([
 			'nome',
@@ -93,12 +158,13 @@ class ProgramaController {
 		]);
 		prog.merge(data);
 		await prog.save();
-		return prog;
+		return response.status(200).json(prog);
 	}
 
-	async destroy({ params }) {
+	async destroy({ params, response }) {
 		const prog = await Programas.findOrFail(params.id);
 		prog.delete();
+		return response.status(200).send();
 	}
 }
 

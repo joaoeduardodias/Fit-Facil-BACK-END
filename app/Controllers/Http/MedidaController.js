@@ -3,24 +3,17 @@
 /** @typedef {import('@adonisjs/framework/src/View')} View */
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 
+/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
+
 const Medida = use('App/Models/Medida');
 
-/**
- * Resourceful controller for interacting with medidas
- */
 class MedidaController {
-	/**
-	 * Show a list of all medidas.
-	 * GET medidas
-	 *
-	 * @param {object} ctx
-	 * @param {Request} ctx.request
-	 * @param {Response} ctx.response
-	 * @param {View} ctx.view
-	 */
-	async index() {
-		const medida = Medida.all();
-		return medida;
+	async index({ auth, response }) {
+		const { id } = auth.getUser();
+		const medida = Medida.query()
+			.with('user')
+			.where('fk_user', id);
+		return response.status(200).json(medida);
 	}
 
 	async store({ request, auth, response }) {
@@ -32,15 +25,17 @@ class MedidaController {
 			'cintura',
 			'perna',
 			'panturrilha',
+			'imc',
 		]);
 
 		const medida = await Medida.create({ fk_user: auth.user.id, ...data });
 		return response.status(201).json(medida);
 	}
 
-	async destroy({ params }) {
+	async destroy({ params, response }) {
 		const medida = await Medida.findOrFail(params.id);
-		medida.delete();
+		await medida.delete();
+		return response.status(200).send();
 	}
 }
 

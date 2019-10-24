@@ -20,6 +20,14 @@ class UsersProgramaController {
 
 		return response.status(200).json(user);
 	}
+
+	async destroy({ params, response, auth }) {
+		const user = await auth.getUser();
+		const { id } = await Treino.findOrFail(params.id);
+
+		await user.mydrills().detach(id);
+		return response.status(200).send();
+	}
 }
 
 module.exports = UsersProgramaController;

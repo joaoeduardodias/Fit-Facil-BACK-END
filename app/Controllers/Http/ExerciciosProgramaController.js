@@ -31,7 +31,12 @@ class ExercicioProgramaController {
 		return response.status(200).json(treino);
 	}
 
-	// DEPOIS DE 15 DIAS ENVIAR UMA NOTIFICACAO PARA O USUARIO DAR UMA NOTA E UM COMENTARIO AO TREINO
+	async destroy({ params, response }) {
+		const { id } = await Exercicio.findOrFail(params.id);
+		const treino = await Treino.findOrFail(params.treino_id);
+		await treino.exercicios_programas().detach(id);
+		return response.status(200).send();
+	}
 }
 
 module.exports = ExercicioProgramaController;
