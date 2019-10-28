@@ -2,10 +2,17 @@
 const Nivel = use('App/Models/Nivel');
 
 class NivelController {
+	async index({ response }) {
+		const nivel = await Nivel.query()
+			.select(['id', 'nivel'])
+			.fetch();
+		return response.status(200).json(nivel);
+	}
+
 	async store({ request, response }) {
-		const data = request.input('nivel');
-		const nivel = await Nivel.create(data);
-		return response.status(201).json(nivel);
+		const data = request.only(['nivel']);
+		const n = await Nivel.create(data);
+		return response.status(201).json(n);
 	}
 
 	async destroy({ params, response }) {

@@ -1,8 +1,15 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Objetivo = use('App/Models/Objetivo');
 class ObjetivoController {
+	async index({ response }) {
+		const obj = await Objetivo.query()
+			.select(['id', 'objetivo'])
+			.fetch();
+		return response.status(200).json(obj);
+	}
+
 	async store({ request, response }) {
-		const data = request.input('objetivo');
+		const data = request.only(['objetivo']);
 		const objetivo = await Objetivo.create(data);
 		return response.status(201).json(objetivo);
 	}

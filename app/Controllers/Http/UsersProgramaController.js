@@ -1,4 +1,3 @@
-// const Meustreinos = use('App/Models/UserPrograma');
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Treino = use('App/Models/Programa');
 

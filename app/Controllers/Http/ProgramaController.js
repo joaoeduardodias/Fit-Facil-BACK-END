@@ -78,7 +78,7 @@ class ProgramaController {
 		const [{ id: obj_id }] = obj.toJSON();
 		const [{ id: nivel_id }] = nivel.toJSON();
 
-		const prog = Programas.query()
+		const prog = await Programas.query()
 			.where(`fk_objetivo`, obj_id)
 			.andWhere(`fk_nivel`, nivel_id)
 			.fetch();
@@ -87,7 +87,7 @@ class ProgramaController {
 
 	async indexperdan2({ response }) {
 		const nivel = await Nivel.query()
-			.where('nivel', 'iniciante')
+			.where('nivel', 'intermediario')
 			.fetch();
 		const obj = await Objetivo.query()
 			.where('objetivo', 'perda')

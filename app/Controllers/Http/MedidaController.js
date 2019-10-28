@@ -9,10 +9,22 @@ const Medida = use('App/Models/Medida');
 
 class MedidaController {
 	async index({ auth, response }) {
-		const { id } = auth.getUser();
-		const medida = Medida.query()
-			.with('user')
-			.where('fk_user', id);
+		const { id } = await auth.getUser();
+
+		const medida = await Medida.query()
+			.select([
+				'id',
+				'peso',
+				'braco',
+				'peito',
+				'ombro',
+				'cintura',
+				'perna',
+				'panturrilha',
+				'created_at',
+			])
+			.where('fk_user', id)
+			.fetch();
 		return response.status(200).json(medida);
 	}
 
@@ -25,7 +37,6 @@ class MedidaController {
 			'cintura',
 			'perna',
 			'panturrilha',
-			'imc',
 		]);
 
 		const medida = await Medida.create({ fk_user: auth.user.id, ...data });

@@ -21,6 +21,16 @@ class AuthController {
 		return response.status(200).json(token);
 	}
 
+	async verificaadm({ auth }) {
+		const user = await auth.getUser();
+		const json = user.toJSON();
+		const { administrador: adm } = json;
+		if (adm === 1) {
+			return true;
+		}
+		return false;
+	}
+
 	async destroy({ params, response }) {
 		const user = await User.findOrFail(params.id);
 		user.delete();

@@ -5,7 +5,9 @@ class ExercicioController {
 	async index({ response }) {
 		const exercicio = await Exercicio.query()
 			.select(['id', 'exercicio', 'descricao', 'agp_muscular'])
-			.with('imagens')
+			.with('imagens', buider => {
+				buider.select(['id', 'exercicio_id', 'path']);
+			})
 			.fetch();
 		return response.status(200).json(exercicio);
 	}
@@ -25,13 +27,13 @@ class ExercicioController {
 		return response.status(200).json(exercicio);
 	}
 
-	async update({ params, request, response }) {
+	async update({ request, params, response }) {
 		const data = request.only(['exercicio', 'descricao', 'agp_muscular']);
-		const exercicio = await Exercicio.findOrFail(params.id);
+		const exe = await Exercicio.findOrFail(params.id);
 
-		exercicio.merge(data);
-		await exercicio.save();
-		return response.status(201).json(exercicio);
+		exe.merge(data);
+		exe.save();
+		return response.status(201).json(exe);
 	}
 
 	async destroy({ params, response }) {
