@@ -1,71 +1,87 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route');
-// LOGIN
-Route.post('/register', 'AuthController.register').validator('register');
-Route.post('/signin', 'AuthController.autenticate').validator('Signin');
-Route.post('/forgot', 'ForgotPasswordController.store').validator('forgot');
-Route.post('/reset', 'ResetPasswordController.store').validator('reset');
-Route.get('/verificaadm', 'AuthController.verificaadm').middleware('auth');
-Route.delete('/delete', 'AuthController.destroy');
-// objetivo e nivel
-Route.get('/objetivo', 'ObjetivoController.index');
-Route.get('/nivel', 'NivelController.index');
-// treinos
-Route.get('/treinos', 'ProgramaController.index');
-Route.get('/onetreino/:id', 'ExerciciosProgramaController.show');
-Route.get('/treinoganho', 'ProgramaController.indexganho');
-Route.get('/treinoperda', 'ProgramaController.indexperda');
 
-//  treinos por nível
-Route.get('/treinoperdaniveliniciante', 'ProgramaController.indexperdan1');
-Route.get('/treinoperdanivelintermediario', 'ProgramaController.indexperdan2');
-Route.get('/treinoperdanivelprofissional', 'ProgramaController.indexperdan3');
-Route.get('/treinoganhoniveliniciante', 'ProgramaController.indexganhon1');
-Route.get('/treinoganhonivelintermediario', 'ProgramaController.indexganhon2');
-Route.get('/treinoganhonivelprofissional', 'ProgramaController.indexganhon3');
-// exercicio
-Route.get('/exercicios', 'ExercicioController.index');
-Route.get('/exercicio/:id', 'ExercicioController.show');
-// retorna a imagem para o front-end
-Route.get('images/:path', 'ImageController.show');
-
+// usuario
 Route.group(() => {
-	// add imagens ao exercicio
-	Route.post('/exe/:id/images', 'ImageController.store');
-	// delete imagem do treino
-	Route.delete('/deleteimg/:id', 'ImageController.destroy');
-	// deleta um usuario
-	Route.delete('/deleteuser/:id', 'AuthController.destroy');
-	// crud de exercicio
-	Route.post('/createexercicio', 'ExercicioController.store');
-	Route.put('/update/:id', 'ExercicioController.update');
-	Route.delete('/deleteexe/:id', 'ExercicioController.destroy');
-	// crud de treinos
-	Route.post('/createtreino', 'ProgramaController.store');
-	Route.put('/treino/:id', 'ProgramaController.update');
-	Route.delete('/treino/:id', 'ProgramaController.destroy');
-	// crud de medidas
+	Route.post('/cadastro', 'AuthController.register').validator('register');
+	Route.post('/login', 'AuthController.autenticate').validator('Signin');
+	Route.get('/verificaadm', 'AuthController.verificaadm').middleware('auth');
+	Route.post('/esqueciminhasenha', 'ForgotPasswordController.store').validator(
+		'forgot'
+	);
+	Route.post('/reset', 'ResetPasswordController.store').validator('reset');
+	Route.delete('/usuario/:id', 'AuthController.destroy');
+});
+
+// objetivo e nivel
+Route.group(() => {
+	Route.get('/nivel', 'NivelController.index');
+	Route.get('/objetivo', 'ObjetivoController.index');
+	// crud
+	Route.post('/nivel', 'NivelController.store');
+	Route.post('/objetivo', 'ObjetivoController.store');
+	Route.delete('/nivel/:id', 'NivelController.destroy');
+	Route.delete('/objetivo/:id', 'ObjetivoController.destroy');
+});
+
+// treinos
+Route.group(() => {
+	Route.get('/treinos', 'TreinoController.index');
+	Route.get('/treino/:id', 'ExercicioTreinoController.show');
+	Route.get('/treinoganho', 'TreinoController.indexganho');
+	Route.get('/treinoperda', 'TreinoController.indexperda');
+	//  treinos por nível
+	// ganho
+	Route.get('/treinoganhoniveliniciante', 'TreinoController.indexganhon1');
+	Route.get('/treinoganhonivelintermediario', 'TreinoController.indexganhon2');
+	Route.get('/treinoganhonivelprofissional', 'TreinoController.indexganhon3');
+	// perda
+	Route.get('/treinoperdaniveliniciante', 'TreinoController.indexperdan1');
+	Route.get('/treinoperdanivelintermediario', 'TreinoController.indexperdan2');
+	Route.get('/treinoperdanivelprofissional', 'TreinoController.indexperdan3');
+	// crud
+	Route.post('/treino', 'TreinoController.store');
+	Route.put('/treino/:id', 'TreinoController.update');
+	Route.delete('/treino/:id', 'TreinoController.destroy');
+});
+
+// meus treinos
+Route.group(() => {
+	Route.get('/meustreinos', 'UsuarioTreino.index');
+	// crud
+	Route.post('/meustreinos/:id', 'UsuarioTreino.store').middleware('auth');
+	Route.delete('/meustreinos/:id', 'UsuarioTreino.destroy').middleware('auth');
+});
+
+// exercicio
+Route.group(() => {
+	Route.get('/exercicios', 'ExercicioController.index');
+	Route.get('/exercicio/:id', 'ExercicioController.show');
+	// crud
+	Route.post('/exercicio', 'ExercicioController.store');
+	Route.put('/exercicio/:id', 'ExercicioController.update');
+	Route.delete('/exercicio/:id', 'ExercicioController.destroy');
+	// adiciona imagens ao exercicio
+	Route.post('/exe/:id/imagens', 'ImagemController.store');
+	// deleta imagens do exercicio
+	Route.delete('/imagem/:id', 'ImagemController.destroy');
+	// retorna a imagem para o front-end
+	Route.get('imagens/:caminho', 'ImagemController.show');
+});
+
+// medidas
+Route.group(() => {
 	Route.get('/medida', 'MedidaController.index');
-	Route.post('/createmedida', 'MedidaController.store');
-	Route.delete('/deletemedida/:id', 'MedidaController.destroy');
-	// meus treinos
-	Route.get('/meustreinos', 'UsersProgramaController.index');
-	Route.post('/meustreinos/:id', 'UsersProgramaController.store');
-	Route.delete('/removemydrills/:id', 'UsersProgramaController.destroy');
-	// adiciona exercicios a um treino
-	Route.post(
-		'/addexe/:id/treino/:treino_id',
-		'ExerciciosProgramaController.store'
-	);
-	// remove exercicios de um treino
+	// crud
+	Route.post('/medida', 'MedidaController.store').middleware('auth');
+	Route.delete('/medida/:id', 'MedidaController.destroy');
+});
+
+// exercicios que pertencem a um treino
+Route.group(() => {
+	Route.post('/exe/:id/treino/:treino_id', 'ExercicioTreinoController.store');
 	Route.delete(
-		'/deleteexe/:id/dotreino/:treino_id',
-		'ExerciciosProgramaController.destroy'
+		'/exe/:id/treino/:treino_id',
+		'ExercicioTreinoController.destroy'
 	);
-	// cria e deleta objetivo
-	Route.post('/createobj', 'ObjetivoController.store');
-	Route.delete('/deleteobj/:id', 'ObjetivoController.destroy');
-	// cria e deleta nivel
-	Route.post('/createnivel', 'NivelController.store');
-	Route.delete('/deletenivel/:id', 'NivelController.destroy');
-}).middleware('auth');
+});

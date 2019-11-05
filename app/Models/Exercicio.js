@@ -2,10 +2,10 @@
 const Model = use('Model');
 
 class Exercicio extends Model {
-	exercicios_programas() {
-		return this.belongsToMany('App/Models/Programa')
-			.pivotTable('exercicio_programas')
-			.pivotModel('App/Models/ExercicioPrograma');
+	treino_exercicios() {
+		return this.belongsToMany('App/Models/Treino')
+			.pivotTable('treino_exercicio')
+			.pivotModel('App/Models/Treino');
 	}
 
 	imagens() {

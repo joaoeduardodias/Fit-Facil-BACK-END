@@ -1,32 +1,32 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-const Treino = use('App/Models/Programa');
+const Treino = use('App/Models/Treino');
 
-class UsersProgramaController {
-	async store({ response, params, auth }) {
-		const user = await auth.getUser();
-		const { id } = await Treino.findOrFail(params.id);
-
-		await user.mydrills().attach(id);
-
-		return response.status(201).send();
-	}
-
+class UsuarioTreinoController {
 	async index({ auth, response }) {
 		const user = await auth.getUser();
-		await user.load('mydrills', builder => {
+		await user.load('meustreinos', builder => {
 			builder.select(['id', 'nome', 'descricao']);
 		});
 
 		return response.status(200).json(user);
 	}
 
+	async store({ response, params, auth }) {
+		const user = await auth.getUser();
+		const { id } = await Treino.findOrFail(params.id);
+
+		await user.meustreinos().attach(id);
+
+		return response.status(201).send();
+	}
+
 	async destroy({ params, response, auth }) {
 		const user = await auth.getUser();
 		const { id } = await Treino.findOrFail(params.id);
 
-		await user.mydrills().detach(id);
+		await user.meustreinos().detach(id);
 		return response.status(200).send();
 	}
 }
 
-module.exports = UsersProgramaController;
+module.exports = UsuarioTreinoController;

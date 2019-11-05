@@ -1,5 +1,6 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Objetivo = use('App/Models/Objetivo');
+
 class ObjetivoController {
 	async index({ response }) {
 		const obj = await Objetivo.query()

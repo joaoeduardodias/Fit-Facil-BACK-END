@@ -2,41 +2,41 @@ const Helpers = use('Helpers');
 const Exercicio = use('App/Models/Exercicio');
 const Imagem = use('App/Models/Imagem');
 
-class ImageController {
+class ImagemController {
 	async show({ params, response }) {
-		return response.download(Helpers.tmpPath(`uploads/${params.path}`));
+		return response.download(Helpers.tmpPath(`uploads/${params.caminho}`));
 	}
 
 	async store({ params, request, response }) {
 		const exe = await Exercicio.findOrFail(params.id);
 
-		const images = request.file('image', {
+		const imagens = request.file('image', {
 			types: ['image'],
 			size: '4mb',
 			extnames: ['png', 'jpg'],
 		});
 
-		await images.moveAll(Helpers.tmpPath('uploads'), file => ({
+		await imagens.moveAll(Helpers.tmpPath('uploads'), file => ({
 			name: `${new Date().getTime()}.${file.subtype}`,
 		}));
 
-		if (!images.movedAll()) {
-			return images.errors();
+		if (!imagens.movedAll()) {
+			return imagens.errors();
 		}
 
 		await Promise.all(
-			images
+			imagens
 				.movedList()
-				.map(image => exe.imagens().create({ path: image.fileName }))
+				.map(image => exe.imagens().create({ caminho: image.fileName }))
 		);
 		return response.status(201).send();
 	}
 
 	async destroy({ params, response }) {
-		const img = await Imagem.findOrFail(params.id);
-		img.delete();
+		const imagem = await Imagem.findOrFail(params.id);
+		imagem.delete();
 		return response.status(200).send();
 	}
 }
 
-module.exports = ImageController;
+module.exports = ImagemController;

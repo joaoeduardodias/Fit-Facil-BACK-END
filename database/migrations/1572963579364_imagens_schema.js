@@ -12,7 +12,7 @@ class ImagensSchema extends Schema {
 				.inTable('exercicios')
 				.onUpdate('CASCADE')
 				.onDelete('CASCADE');
-			table.string('path').notNullable();
+			table.string('caminho').notNullable();
 			table.timestamps();
 		});
 	}

@@ -1,8 +1,3 @@
-/** @typedef {import('@adonisjs/framework/src/Request')} Request */
-/** @typedef {import('@adonisjs/framework/src/Response')} Response */
-/** @typedef {import('@adonisjs/framework/src/View')} View */
-/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 
 const Medida = use('App/Models/Medida');
@@ -23,7 +18,7 @@ class MedidaController {
 				'panturrilha',
 				'created_at',
 			])
-			.where('fk_user', id)
+			.where('usuario_id', id)
 			.fetch();
 		return response.status(200).json(medida);
 	}
@@ -39,7 +34,7 @@ class MedidaController {
 			'panturrilha',
 		]);
 
-		const medida = await Medida.create({ fk_user: auth.user.id, ...data });
+		const medida = await Medida.create({ usuario_id: auth.user.id, ...data });
 		return response.status(201).json(medida);
 	}
 

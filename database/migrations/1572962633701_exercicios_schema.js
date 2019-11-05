@@ -5,8 +5,9 @@ class ExerciciosSchema extends Schema {
 	up() {
 		this.create('exercicios', table => {
 			table.increments();
-			table.string('exercicio', 50).notNullable();
+			table.string('nome', 50).notNullable();
 			table.text('descricao').notNullable();
+			table.string('agp_muscular', 50);
 			table.timestamps();
 		});
 	}

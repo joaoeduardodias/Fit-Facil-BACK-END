@@ -2,8 +2,8 @@
 const Model = use('Model');
 
 class Medida extends Model {
-	user() {
-		return this.belongsTo('App/Models/User');
+	usuario() {
+		return this.belongsTo('App/Models/Usuario');
 	}
 }
 

@@ -11,8 +11,8 @@ class NivelController {
 
 	async store({ request, response }) {
 		const data = request.only(['nivel']);
-		const n = await Nivel.create(data);
-		return response.status(201).json(n);
+		const nivel = await Nivel.create(data);
+		return response.status(201).json(nivel);
 	}
 
 	async destroy({ params, response }) {

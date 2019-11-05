@@ -2,8 +2,8 @@
 const Model = use('Model');
 
 class Objetivo extends Model {
-	programa() {
-		return this.hasMany('App/Models/Programa');
+	treinos() {
+		return this.hasMany('App/Models/Treino');
 	}
 }
 

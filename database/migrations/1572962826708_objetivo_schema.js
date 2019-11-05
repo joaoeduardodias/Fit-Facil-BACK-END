@@ -1,7 +1,7 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema');
 
-class ObjetivosSchema extends Schema {
+class ObjetivoSchema extends Schema {
 	up() {
 		this.create('objetivos', table => {
 			table.increments();
@@ -15,4 +15,4 @@ class ObjetivosSchema extends Schema {
 	}
 }
 
-module.exports = ObjetivosSchema;
+module.exports = ObjetivoSchema;

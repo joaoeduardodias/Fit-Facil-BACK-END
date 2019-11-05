@@ -2,8 +2,8 @@
 const Model = use('Model');
 
 class Nivel extends Model {
-	programa() {
-		return this.hasMany('App/Models/Programa');
+	treinos() {
+		return this.hasMany('App/Models/Treino');
 	}
 }
 

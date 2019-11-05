@@ -12,8 +12,8 @@ class Imagem extends Model {
 		return ['url'];
 	}
 
-	getUrl({ path }) {
-		return `${Env.get('APP_URL')}/images/${path}`;
+	getUrl({ caminho }) {
+		return `${Env.get('APP_URL')}/images/${caminho}`;
 	}
 
 	exercicio() {

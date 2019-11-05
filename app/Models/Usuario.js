@@ -4,17 +4,17 @@ const Model = use('Model');
 /** @type {import('@adonisjs/framework/src/Hash')} */
 const Hash = use('Hash');
 
-class User extends Model {
+class Usuario extends Model {
+	static get table() {
+		return 'usuarios';
+	}
+
 	static boot() {
 		super.boot();
 
-		/**
-		 * A hook to hash the user password before saving
-		 * it to the database.
-		 */
 		this.addHook('beforeSave', async userInstance => {
-			if (userInstance.dirty.password) {
-				userInstance.password = await Hash.make(userInstance.password);
+			if (userInstance.dirty.senha) {
+				userInstance.senha = await Hash.make(userInstance.senha);
 			}
 		});
 	}
@@ -37,11 +37,11 @@ class User extends Model {
 		return this.hasMany('App/Models/Medida');
 	}
 
-	mydrills() {
-		return this.belongsToMany('App/Models/Programa')
-			.pivotTable('user_programas')
-			.pivotModel('App/Models/UserPrograma');
+	meustreinos() {
+		return this.belongsToMany('App/Models/Treino')
+			.pivotTable('usuario_treino')
+			.pivotModel('App/Models/UsuarioTreino');
 	}
 }
 
-module.exports = User;
+module.exports = Usuario;

@@ -3,7 +3,7 @@ const Schema = use('Schema');
 
 class NivelSchema extends Schema {
 	up() {
-		this.create('nivels', table => {
+		this.create('nivel', table => {
 			table.increments();
 			table.string('nivel', 15);
 			table.timestamps();
@@ -11,7 +11,7 @@ class NivelSchema extends Schema {
 	}
 
 	down() {
-		this.drop('nivels');
+		this.drop('nivel');
 	}
 }
 

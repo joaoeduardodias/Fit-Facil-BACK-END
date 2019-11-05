@@ -1,35 +1,35 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema');
 
-class ExercicioProgramaSchema extends Schema {
+class UsuarioTreinoSchema extends Schema {
 	up() {
-		this.create('exercicio_programas', table => {
+		this.create('usuario_treino', table => {
 			table.increments();
 			table
-				.integer('programa_id')
+				.integer('usuario_id')
 				.unsigned()
 				.notNullable()
 				.references('id')
-				.inTable('programas')
+				.inTable('usuarios')
 				.onUpdate('CASCADE')
 				.onDelete('CASCADE');
 			table
-				.integer('exercicio_id')
+				.integer('treino_id')
 				.unsigned()
 				.notNullable()
 				.references('id')
-				.inTable('exercicios')
+				.inTable('treinos')
 				.onUpdate('CASCADE')
 				.onDelete('CASCADE');
-			table.integer('repeticoes');
-			table.float('descanso');
+			table.float('nota');
+			table.text('comentario');
 			table.timestamps();
 		});
 	}
 
 	down() {
-		this.drop('exercicio_programas');
+		this.drop('usuario_treino');
 	}
 }
 
-module.exports = ExercicioProgramaSchema;
+module.exports = UsuarioTreinoSchema;

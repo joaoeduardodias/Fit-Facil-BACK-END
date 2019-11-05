@@ -1,7 +1,7 @@
 /** @type {import('@adonisjs/lucid/src/Schema')} */
 const Schema = use('Schema');
 
-class MedidaSchema extends Schema {
+class MedidasSchema extends Schema {
 	up() {
 		this.create('medidas', table => {
 			table.increments();
@@ -13,11 +13,11 @@ class MedidaSchema extends Schema {
 			table.float('perna');
 			table.float('panturrilha');
 			table
-				.integer('fk_user')
+				.integer('usuario_id')
 				.unsigned()
 				.notNullable()
 				.references('id')
-				.inTable('users')
+				.inTable('usuarios')
 				.onUpdate('CASCADE')
 				.onDelete('CASCADE');
 			table.timestamps();
@@ -29,4 +29,4 @@ class MedidaSchema extends Schema {
 	}
 }
 
-module.exports = MedidaSchema;
+module.exports = MedidasSchema;

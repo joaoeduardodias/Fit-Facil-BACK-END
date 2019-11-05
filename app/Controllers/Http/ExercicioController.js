@@ -4,36 +4,35 @@ const Exercicio = use('App/Models/Exercicio');
 class ExercicioController {
 	async index({ response }) {
 		const exercicio = await Exercicio.query()
-			.select(['id', 'exercicio', 'descricao', 'agp_muscular'])
+			.select(['id', 'nome', 'descricao', 'agp_muscular'])
 			.with('imagens', buider => {
-				buider.select(['id', 'exercicio_id', 'path']);
+				buider.select(['id', 'exercicio_id', 'caminho']);
 			})
 			.fetch();
 		return response.status(200).json(exercicio);
 	}
 
+	async show({ params, response }) {
+		const exercicio = await Exercicio.findOrFail(params.id);
+		await exercicio.load('imagens', builder => {
+			builder.select(['id', 'caminho']);
+		});
+		return response.status(200).json(exercicio);
+	}
+
 	async store({ request, response }) {
-		const data = request.only(['exercicio', 'descricao', 'agp_muscular']);
+		const data = request.only(['nome', 'descricao', 'agp_muscular']);
 		const exercicio = await Exercicio.create(data);
 		return response.status(201).json(exercicio);
 	}
 
-	async show({ params, response }) {
-		const exercicio = await Exercicio.findOrFail(params.id);
-		await exercicio.load('imagens', builder => {
-			builder.select(['id', 'path']);
-		});
-
-		return response.status(200).json(exercicio);
-	}
-
 	async update({ request, params, response }) {
-		const data = request.only(['exercicio', 'descricao', 'agp_muscular']);
-		const exe = await Exercicio.findOrFail(params.id);
+		const data = request.only(['nome', 'descricao', 'agp_muscular']);
+		const exercicio = await Exercicio.findOrFail(params.id);
 
-		exe.merge(data);
-		exe.save();
-		return response.status(201).json(exe);
+		exercicio.merge(data);
+		exercicio.save();
+		return response.status(201).json(exercicio);
 	}
 
 	async destroy({ params, response }) {
