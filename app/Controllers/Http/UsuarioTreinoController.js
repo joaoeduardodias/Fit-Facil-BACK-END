@@ -3,28 +3,28 @@ const Treino = use('App/Models/Treino');
 
 class UsuarioTreinoController {
 	async index({ auth, response }) {
-		const user = await auth.getUser();
-		await user.load('meustreinos', builder => {
-			builder.select(['id', 'nome', 'descricao']);
+		const usuario = await auth.getUser();
+		await usuario.load('meustreinos', builder => {
+			builder.select(['id', 'nome']);
 		});
 
-		return response.status(200).json(user);
+		return response.status(200).json(usuario);
 	}
 
 	async store({ response, params, auth }) {
-		const user = await auth.getUser();
+		const usuario = await auth.getUser();
 		const { id } = await Treino.findOrFail(params.id);
 
-		await user.meustreinos().attach(id);
+		await usuario.meustreinos().attach(id);
 
 		return response.status(201).send();
 	}
 
 	async destroy({ params, response, auth }) {
-		const user = await auth.getUser();
+		const usuario = await auth.getUser();
 		const { id } = await Treino.findOrFail(params.id);
 
-		await user.meustreinos().detach(id);
+		await usuario.meustreinos().detach(id);
 		return response.status(200).send();
 	}
 }

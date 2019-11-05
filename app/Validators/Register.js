@@ -5,9 +5,9 @@ class register {
 
 	get rules() {
 		return {
-			username: 'required',
+			nome: 'required',
 			email: 'email|required',
-			password: 'required | min:8',
+			senha: 'required | min:8',
 		};
 	}
 }

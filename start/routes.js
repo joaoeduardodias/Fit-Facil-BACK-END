@@ -3,14 +3,16 @@ const Route = use('Route');
 
 // usuario
 Route.group(() => {
-	Route.post('/cadastro', 'AuthController.register').validator('register');
-	Route.post('/login', 'AuthController.autenticate').validator('Signin');
-	Route.get('/verificaadm', 'AuthController.verificaadm').middleware('auth');
+	Route.post('/cadastro', 'UsuarioController.register').validator('register');
+	Route.post('/login', 'UsuarioController.autenticate').validator('Signin');
+	Route.get('/verificaadm', 'UsuarioController.verificaadm').middleware(
+		'auth'
+	);
 	Route.post('/esqueciminhasenha', 'ForgotPasswordController.store').validator(
 		'forgot'
 	);
 	Route.post('/reset', 'ResetPasswordController.store').validator('reset');
-	Route.delete('/usuario/:id', 'AuthController.destroy');
+	Route.delete('/usuario/:id', 'UsuarioController.destroy');
 });
 
 // objetivo e nivel
@@ -47,10 +49,15 @@ Route.group(() => {
 
 // meus treinos
 Route.group(() => {
-	Route.get('/meustreinos', 'UsuarioTreino.index');
+	Route.get('/meustreinos', 'UsuarioTreinoController.index');
 	// crud
-	Route.post('/meustreinos/:id', 'UsuarioTreino.store').middleware('auth');
-	Route.delete('/meustreinos/:id', 'UsuarioTreino.destroy').middleware('auth');
+	Route.post('/meustreinos/:id', 'UsuarioTreinoController.store').middleware(
+		'auth'
+	);
+	Route.delete(
+		'/meustreinos/:id',
+		'UsuarioTreinoController.destroy'
+	).middleware('auth');
 });
 
 // exercicio

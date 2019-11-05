@@ -1,6 +1,6 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-const Exe_treino = use('App/Models/ExercicioPrograma');
-const Treino = use('App/Models/Programa');
+const Exe_treino = use('App/Models/TreinoExercicio');
+const Treino = use('App/Models/Treino');
 const Exercicio = use('App/Models/Exercicio');
 
 class ExercicioTreinoController {
@@ -24,7 +24,7 @@ class ExercicioTreinoController {
 
 	async show({ params, response }) {
 		const treino = await Treino.findOrFail(params.id);
-		await treino.load('treino_exercicio', builder => {
+		await treino.load('treino_exercicios', builder => {
 			builder.select(['id', 'nome', 'agp_muscular']);
 		});
 

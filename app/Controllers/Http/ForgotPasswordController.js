@@ -6,7 +6,7 @@ const Env = use('Env');
 
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 
-const User = use('App/Models/User');
+const User = use('App/Models/Usuario');
 
 class ForgotPasswordController {
 	async store({ request }) {

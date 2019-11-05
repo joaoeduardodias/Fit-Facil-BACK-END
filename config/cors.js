@@ -27,7 +27,7 @@ module.exports = {
   | Array - An array of allowed methods
   |
   */
-	methods: ['GET', 'PUT', 'PATCH', 'POST', 'DELETE'],
+	methods: ['GET', 'PUT', 'POST', 'DELETE'],
 
 	/*
   |--------------------------------------------------------------------------
@@ -60,7 +60,7 @@ module.exports = {
   | Array - An array of allowed headers
   |
   */
-	exposeHeaders: false,
+	exposeHeaders: true,
 
 	/*
   |--------------------------------------------------------------------------

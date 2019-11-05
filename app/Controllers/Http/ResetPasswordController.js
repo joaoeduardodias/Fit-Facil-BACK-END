@@ -6,7 +6,7 @@ const Token = use('App/Models/Token');
 
 class ResetPasswordController {
 	async store({ request, response }) {
-		const { token, password } = request.only(['token', 'password']);
+		const { token, senha } = request.only(['token', 'senha']);
 
 		const usertoken = await Token.findByOrFail('token', token);
 
@@ -17,10 +17,10 @@ class ResetPasswordController {
 			});
 		}
 
-		const user = await usertoken.user().fetch();
+		const usuario = await usertoken.usuario().fetch();
 
-		user.password = password;
-		await user.save();
+		usuario.senha = senha;
+		await usuario.save();
 	}
 }
 

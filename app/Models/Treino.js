@@ -13,6 +13,11 @@ class Treino extends Model {
 			.pivotTable('treino_exercicio')
 			.pivotModel('App/Models/TreinoExercicio');
 	}
+	/*
+	static getObjetivo({ objetivo_id }) {
+		if (objetivo_id === 1) {
+			return 'perda';
+		} */
 }
 
 module.exports = Treino;

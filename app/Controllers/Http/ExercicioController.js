@@ -9,6 +9,7 @@ class ExercicioController {
 				buider.select(['id', 'exercicio_id', 'caminho']);
 			})
 			.fetch();
+
 		return response.status(200).json(exercicio);
 	}
 
@@ -28,10 +29,11 @@ class ExercicioController {
 
 	async update({ request, params, response }) {
 		const data = request.only(['nome', 'descricao', 'agp_muscular']);
+
 		const exercicio = await Exercicio.findOrFail(params.id);
 
 		exercicio.merge(data);
-		exercicio.save();
+		await exercicio.save();
 		return response.status(201).json(exercicio);
 	}
 

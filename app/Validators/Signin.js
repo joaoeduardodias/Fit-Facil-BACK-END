@@ -6,7 +6,7 @@ class Signin {
 	get rules() {
 		return {
 			email: 'email|required',
-			password: 'required',
+			senha: 'required',
 		};
 	}
 }

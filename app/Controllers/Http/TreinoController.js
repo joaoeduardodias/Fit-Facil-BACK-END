@@ -146,8 +146,8 @@ class TreinoController {
 			'objetivo_id',
 			'nivel_id',
 		]);
-		const treino = await Treino.create(data);
-		return response.status(201).json(treino);
+		const prog = await Treino.create(data);
+		return response.status(201).json(prog);
 	}
 
 	async update({ params, request, response }) {
