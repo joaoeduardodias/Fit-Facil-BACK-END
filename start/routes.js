@@ -68,12 +68,6 @@ Route.group(() => {
 	Route.post('/exercicio', 'ExercicioController.store');
 	Route.put('/exercicio/:id', 'ExercicioController.update');
 	Route.delete('/exercicio/:id', 'ExercicioController.destroy');
-	// adiciona imagens ao exercicio
-	Route.post('/exe/:id/imagens', 'ImagemController.store');
-	// deleta imagens do exercicio
-	Route.delete('/imagem/:id', 'ImagemController.destroy');
-	// retorna a imagem para o front-end
-	Route.get('imagens/:caminho', 'ImagemController.show');
 });
 
 // medidas
@@ -91,4 +85,25 @@ Route.group(() => {
 		'/exe/:id/treino/:treino_id',
 		'ExercicioTreinoController.destroy'
 	);
+});
+
+// Imagens
+Route.group(() => {
+	// adiciona imagens ao exercicio
+	Route.post('/exe/:id/imagens', 'ImagemController.store');
+	// adiciona imagens ao dicas_nutri
+	Route.post('/nutri/:id/imagens', 'ImagemController.store2');
+	// deleta imagens
+	Route.delete('/imagem/:id', 'ImagemController.destroy');
+	// retorna a imagem para o front-end
+	Route.get('imagens/:caminho', 'ImagemController.show');
+});
+
+// Dicas Nutricao
+Route.group(() => {
+	Route.post('/nutri', 'DicasNutriController.store');
+	Route.put('/nutri/:id', 'DicasNutriController.update');
+	Route.delete('/nutri/:id', 'DicasNutriController.destroy');
+	Route.get('/', 'DicasNutriController.index');
+	Route.get('/nutri/:id', 'DicasNutriController.show');
 });

@@ -12,6 +12,13 @@ class ImagensSchema extends Schema {
 				.inTable('exercicios')
 				.onUpdate('CASCADE')
 				.onDelete('CASCADE');
+			table
+				.integer('dicas_nutri_id')
+				.unsigned()
+				.references('id')
+				.inTable('dicas_nutri')
+				.onUpdate('CASCADE')
+				.onDelete('CASCADE');
 			table.string('caminho').notNullable();
 			table.timestamps();
 		});

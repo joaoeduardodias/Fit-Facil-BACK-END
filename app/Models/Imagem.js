@@ -13,11 +13,15 @@ class Imagem extends Model {
 	}
 
 	getUrl({ caminho }) {
-		return `${Env.get('APP_URL')}/images/${caminho}`;
+		return `${Env.get('APP_URL')}/imagens/${caminho}`;
 	}
 
 	exercicio() {
 		return this.belongsTo('App/Models/Exercicio');
+	}
+
+	dicas_nutri() {
+		return this.belongsTo('App/Models/DicasNutri');
 	}
 }
 
