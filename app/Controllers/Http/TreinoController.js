@@ -5,7 +5,15 @@ const Nivel = use('App/Models/Nivel');
 class TreinoController {
 	async index({ response }) {
 		const treinos = Treino.query()
-			.select(['id', 'nome', 'objetivo_id', 'nivel_id', 'created_at'])
+			.select([
+				'id',
+				'nome',
+				'repeticoes',
+				'descanso',
+				'objetivo_id',
+				'nivel_id',
+				'created_at',
+			])
 			.fetch();
 		return response.status(200).json(treinos);
 	}
@@ -143,6 +151,8 @@ class TreinoController {
 		const data = request.only([
 			'nome',
 			'descricao',
+			'descanso',
+			'repeticoes',
 			'objetivo_id',
 			'nivel_id',
 		]);
@@ -155,6 +165,8 @@ class TreinoController {
 		const data = request.only([
 			'nome',
 			'descricao',
+			'descanso',
+			'repeticoes',
 			'objetivo_id',
 			'nivel_id',
 		]);

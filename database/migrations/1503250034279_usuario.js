@@ -11,8 +11,8 @@ class UserSchema extends Schema {
 				.notNullable()
 				.unique();
 			table.string('senha', 60).notNullable();
-			table.string('sexo', 9);
 			table.boolean('adm').defaultTo(0);
+			table.string('sexo', 9);
 			table.timestamps();
 		});
 	}

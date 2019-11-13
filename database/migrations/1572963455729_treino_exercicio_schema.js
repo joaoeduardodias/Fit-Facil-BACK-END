@@ -21,8 +21,7 @@ class TreinoExercicioSchema extends Schema {
 				.inTable('exercicios')
 				.onUpdate('CASCADE')
 				.onDelete('CASCADE');
-			table.integer('repeticoes');
-			table.float('descanso');
+
 			table.timestamps();
 		});
 	}

@@ -22,6 +22,8 @@ class TreinosSchema extends Schema {
 				.onUpdate('CASCADE')
 				.onDelete('CASCADE');
 			table.string('nome', 80).notNullable();
+			table.integer('repeticoes');
+			table.float('descanso');
 			table.timestamps();
 		});
 	}

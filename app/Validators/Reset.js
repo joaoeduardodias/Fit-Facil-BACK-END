@@ -1,14 +1,10 @@
-class forgot {
-	get validateAll() {
-		return true;
-	}
-
+class Reset {
 	get rules() {
 		return {
 			token: 'required',
-			password: 'required|confirmed| min:8',
+			senha: 'required| min: 6| max: 60|confirmed',
 		};
 	}
 }
 
-module.exports = forgot;
+module.exports = Reset;

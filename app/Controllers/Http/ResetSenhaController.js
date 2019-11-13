@@ -4,7 +4,7 @@ const { parseISO, isBefore, subHours } = require('date-fns');
 
 const Token = use('App/Models/Token');
 
-class ResetPasswordController {
+class ResetSenhaController {
 	async store({ request, response }) {
 		const { token, senha } = request.only(['token', 'senha']);
 
@@ -18,10 +18,11 @@ class ResetPasswordController {
 		}
 
 		const usuario = await usertoken.usuario().fetch();
+		console.log(usuario);
 
 		usuario.senha = senha;
 		await usuario.save();
 	}
 }
 
-module.exports = ResetPasswordController;
+module.exports = ResetSenhaController;

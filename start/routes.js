@@ -3,15 +3,15 @@ const Route = use('Route');
 
 // usuario
 Route.group(() => {
-	Route.post('/cadastro', 'UsuarioController.register').validator('register');
-	Route.post('/login', 'UsuarioController.autenticate').validator('Signin');
+	Route.post('/cadastro', 'UsuarioController.register').validator('Cadastro');
+	Route.post('/login', 'UsuarioController.autenticate').validator('Login');
 	Route.get('/verificaadm', 'UsuarioController.verificaadm').middleware(
 		'auth'
 	);
 	Route.post('/esqueciminhasenha', 'ForgotPasswordController.store').validator(
-		'forgot'
+		'Esqueciminhasenha'
 	);
-	Route.post('/reset', 'ResetPasswordController.store').validator('reset');
+	Route.post('/reset', 'ResetSenhaController.store').validator('Reset');
 	Route.delete('/usuario/:id', 'UsuarioController.destroy');
 });
 
@@ -42,8 +42,10 @@ Route.group(() => {
 	Route.get('/treinoperdanivelintermediario', 'TreinoController.indexperdan2');
 	Route.get('/treinoperdanivelprofissional', 'TreinoController.indexperdan3');
 	// crud
-	Route.post('/treino', 'TreinoController.store');
-	Route.put('/treino/:id', 'TreinoController.update');
+	Route.post('/treino', 'TreinoController.store').validator('CriaTreino');
+	Route.put('/treino/:id', 'TreinoController.update').validator(
+		'AtualizaTreino'
+	);
 	Route.delete('/treino/:id', 'TreinoController.destroy');
 });
 
@@ -65,8 +67,12 @@ Route.group(() => {
 	Route.get('/exercicios', 'ExercicioController.index');
 	Route.get('/exercicio/:id', 'ExercicioController.show');
 	// crud
-	Route.post('/exercicio', 'ExercicioController.store');
-	Route.put('/exercicio/:id', 'ExercicioController.update');
+	Route.post('/exercicio', 'ExercicioController.store').validator(
+		'CriaExercicio'
+	);
+	Route.put('/exercicio/:id', 'ExercicioController.update').validator(
+		'AtualizaExercicio'
+	);
 	Route.delete('/exercicio/:id', 'ExercicioController.destroy');
 });
 
@@ -74,7 +80,9 @@ Route.group(() => {
 Route.group(() => {
 	Route.get('/medida', 'MedidaController.index');
 	// crud
-	Route.post('/medida', 'MedidaController.store').middleware('auth');
+	Route.post('/medida', 'MedidaController.store')
+		.validator('CriaMedida')
+		.middleware('auth');
 	Route.delete('/medida/:id', 'MedidaController.destroy');
 });
 
@@ -90,9 +98,11 @@ Route.group(() => {
 // Imagens
 Route.group(() => {
 	// adiciona imagens ao exercicio
-	Route.post('/exe/:id/imagens', 'ImagemController.store');
+	Route.post('/exe/:id/imagens', 'ImagemController.store').validator('Imagem');
 	// adiciona imagens ao dicas_nutri
-	Route.post('/nutri/:id/imagens', 'ImagemController.store2');
+	Route.post('/nutri/:id/imagens', 'ImagemController.store2').validator(
+		'Imagem'
+	);
 	// deleta imagens
 	Route.delete('/imagem/:id', 'ImagemController.destroy');
 	// retorna a imagem para o front-end
@@ -101,8 +111,12 @@ Route.group(() => {
 
 // Dicas Nutricao
 Route.group(() => {
-	Route.post('/nutri', 'DicasNutriController.store');
-	Route.put('/nutri/:id', 'DicasNutriController.update');
+	Route.post('/nutri', 'DicasNutriController.store').validator(
+		'CriaDicasNutri'
+	);
+	Route.put('/nutri/:id', 'DicasNutriController.update').validator(
+		'AtualizaDicasNutri'
+	);
 	Route.delete('/nutri/:id', 'DicasNutriController.destroy');
 	Route.get('/', 'DicasNutriController.index');
 	Route.get('/nutri/:id', 'DicasNutriController.show');

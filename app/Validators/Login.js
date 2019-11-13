@@ -1,8 +1,4 @@
-class Signin {
-	get validateAll() {
-		return true;
-	}
-
+class Login {
 	get rules() {
 		return {
 			email: 'email|required',
@@ -11,4 +7,4 @@ class Signin {
 	}
 }
 
-module.exports = Signin;
+module.exports = Login;
