@@ -14,33 +14,61 @@ class ExercicioController {
 	}
 
 	async show({ params, response }) {
-		const exercicio = await Exercicio.findOrFail(params.id);
-		await exercicio.load('imagens', builder => {
-			builder.select(['id', 'caminho']);
-		});
-		return response.status(200).json(exercicio);
+		try {
+			const exercicio = await Exercicio.findOrFail(params.id);
+			await exercicio.load('imagens', builder => {
+				builder.select(['id', 'caminho']);
+			});
+			return response.status(200).json(exercicio);
+		} catch (error) {
+			return response.status(400).json({
+				error:
+					'Algo deu errado, por favor tente novamente, ou entre em contato com o suporte !',
+			});
+		}
 	}
 
 	async store({ request, response }) {
-		const data = request.only(['nome', 'descricao', 'agp_muscular']);
-		const exercicio = await Exercicio.create(data);
-		return response.status(201).json(exercicio);
+		try {
+			const data = request.only(['nome', 'descricao', 'agp_muscular']);
+			const exercicio = await Exercicio.create(data);
+			return response.status(201).json(exercicio);
+		} catch (error) {
+			return response.status(400).json({
+				error:
+					'Algo deu errado, por favor tente novamente, ou entre em contato com o suporte !',
+			});
+		}
 	}
 
 	async update({ request, params, response }) {
-		const data = request.only(['nome', 'descricao', 'agp_muscular']);
+		try {
+			const data = request.only(['nome', 'descricao', 'agp_muscular']);
 
-		const exercicio = await Exercicio.findOrFail(params.id);
+			const exercicio = await Exercicio.findOrFail(params.id);
 
-		exercicio.merge(data);
-		await exercicio.save();
-		return response.status(201).json(exercicio);
+			exercicio.merge(data);
+			await exercicio.save();
+			return response.status(201).json(exercicio);
+		} catch (error) {
+			return response.status(400).json({
+				error:
+					'Algo deu errado, por favor tente novamente, ou entre em contato com o suporte !',
+			});
+		}
 	}
 
 	async destroy({ params, response }) {
-		const exercicio = await Exercicio.findOrFail(params.id);
-		await exercicio.delete();
-		return response.status(200).send();
+		try {
+			const exercicio = await Exercicio.findOrFail(params.id);
+			await exercicio.delete();
+			return response.status(200).send();
+		} catch (error) {
+			return response.status(400).json({
+				error:
+					'Algo deu errado, por favor tente novamente, ou entre em contato com o suporte !',
+			});
+		}
 	}
 }
 
