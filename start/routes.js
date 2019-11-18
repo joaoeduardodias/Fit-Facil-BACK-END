@@ -20,8 +20,8 @@ Route.group(() => {
 	Route.get('/nivel', 'NivelController.index');
 	Route.get('/objetivo', 'ObjetivoController.index');
 	// crud
-	Route.post('/nivel', 'NivelController.store');
-	Route.post('/objetivo', 'ObjetivoController.store');
+	Route.post('/nivel', 'NivelController.store').validator('nivel');
+	Route.post('/objetivo', 'ObjetivoController.store').validator('objetivo');
 	Route.delete('/nivel/:id', 'NivelController.destroy');
 	Route.delete('/objetivo/:id', 'ObjetivoController.destroy');
 });

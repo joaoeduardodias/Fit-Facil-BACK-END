@@ -10,15 +10,29 @@ class ObjetivoController {
 	}
 
 	async store({ request, response }) {
-		const data = request.only(['objetivo']);
-		const objetivo = await Objetivo.create(data);
-		return response.status(201).json(objetivo);
+		try {
+			const data = request.only(['objetivo']);
+			const objetivo = await Objetivo.create(data);
+			return response.status(201).json(objetivo);
+		} catch (error) {
+			return response.status(400).json({
+				error:
+					'Algo deu errado, por favor tente novamente, ou entre em contato com o suporte !',
+			});
+		}
 	}
 
 	async destroy({ params, response }) {
-		const objetivo = await Objetivo.findOrFail(params.id);
-		await objetivo.delete();
-		return response.status(200).send();
+		try {
+			const objetivo = await Objetivo.findOrFail(params.id);
+			await objetivo.delete();
+			return response.status(200).send();
+		} catch (error) {
+			return response.status(400).json({
+				error:
+					'Algo deu errado, por favor tente novamente, ou entre em contato com o suporte !',
+			});
+		}
 	}
 }
 
