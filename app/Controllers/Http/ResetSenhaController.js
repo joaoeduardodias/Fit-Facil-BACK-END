@@ -7,21 +7,27 @@ const Token = use('App/Models/Token');
 class ResetSenhaController {
 	async store({ request, response }) {
 		const { token, senha } = request.only(['token', 'senha']);
+		try {
+			const usertoken = await Token.findOrFail('token', token);
+			if (
+				isBefore(parseISO(usertoken.created_at), subHours(new Date(), 2))
+			) {
+				return response.status(400).json({
+					error:
+						' O tempo para recuperação de senha expirou, por favor realize uma nova solicitação',
+				});
+			}
 
-		const usertoken = await Token.findByOrFail('token', token);
+			const usuario = await usertoken.usuario().fetch();
 
-		if (isBefore(parseISO(usertoken.created_at), subHours(new Date(), 2))) {
+			usuario.senha = senha;
+			await usuario.save();
+		} catch (error) {
 			return response.status(400).json({
 				error:
-					' O tempo para recuperação de senha expirou, por favor realize uma nova solicitação',
+					'ERRO, Por favor faça uma nova solicitação de recuperação de senha',
 			});
 		}
-
-		const usuario = await usertoken.usuario().fetch();
-		console.log(usuario);
-
-		usuario.senha = senha;
-		await usuario.save();
 	}
 }
 
