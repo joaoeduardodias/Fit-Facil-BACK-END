@@ -1,11 +1,11 @@
-'use strict'
+const { rule } = use('Validator');
 
 class CriaMedida {
-  get rules () {
-    return {
-      // validation rules
-    }
-  }
+	get rules() {
+		return {
+			usuario_id: [rule('exists', ['usuarios', 'id'])],
+		};
+	}
 }
 
-module.exports = CriaMedida
+module.exports = CriaMedida;

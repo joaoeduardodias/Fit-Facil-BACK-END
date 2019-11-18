@@ -24,24 +24,41 @@ class MedidaController {
 	}
 
 	async store({ request, auth, response }) {
-		const data = request.only([
-			'peso',
-			'braco',
-			'peito',
-			'ombro',
-			'cintura',
-			'perna',
-			'panturrilha',
-		]);
+		try {
+			const data = request.only([
+				'peso',
+				'braco',
+				'peito',
+				'ombro',
+				'cintura',
+				'perna',
+				'panturrilha',
+			]);
 
-		const medida = await Medida.create({ usuario_id: auth.user.id, ...data });
-		return response.status(201).json(medida);
+			const medida = await Medida.create({
+				usuario_id: auth.user.id,
+				...data,
+			});
+			return response.status(201).json(medida);
+		} catch (error) {
+			return response.status(400).json({
+				error:
+					'Algo deu errado, por favor tente novamente, ou entre em contato com o suporte !',
+			});
+		}
 	}
 
 	async destroy({ params, response }) {
-		const medida = await Medida.findOrFail(params.id);
-		await medida.delete();
-		return response.status(200).send();
+		try {
+			const medida = await Medida.findOrFail(params.id);
+			await medida.delete();
+			return response.status(200).send();
+		} catch (error) {
+			return response.status(400).json({
+				error:
+					'Algo deu errado, por favor tente novamente, ou entre em contato com o suporte !',
+			});
+		}
 	}
 }
 
