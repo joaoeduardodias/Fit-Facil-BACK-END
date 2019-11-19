@@ -148,37 +148,58 @@ class TreinoController {
 	}
 
 	async store({ request, response }) {
-		const data = request.only([
-			'nome',
-			'descricao',
-			'descanso',
-			'repeticoes',
-			'objetivo_id',
-			'nivel_id',
-		]);
-		const prog = await Treino.create(data);
-		return response.status(201).json(prog);
+		try {
+			const data = request.only([
+				'nome',
+				'descricao',
+				'descanso',
+				'repeticoes',
+				'objetivo_id',
+				'nivel_id',
+			]);
+			const prog = await Treino.create(data);
+			return response.status(201).json(prog);
+		} catch (error) {
+			return response.status(400).json({
+				error:
+					'Algo deu errado, por favor tente novamente, ou entre em contato com o suporte !',
+			});
+		}
 	}
 
 	async update({ params, request, response }) {
-		const treino = await Treino.findOrFail(params.id);
-		const data = request.only([
-			'nome',
-			'descricao',
-			'descanso',
-			'repeticoes',
-			'objetivo_id',
-			'nivel_id',
-		]);
-		treino.merge(data);
-		await treino.save();
-		return response.status(200).json(treino);
+		try {
+			const treino = await Treino.findOrFail(params.id);
+			const data = request.only([
+				'nome',
+				'descricao',
+				'descanso',
+				'repeticoes',
+				'objetivo_id',
+				'nivel_id',
+			]);
+			treino.merge(data);
+			await treino.save();
+			return response.status(200).json(treino);
+		} catch (error) {
+			return response.status(400).json({
+				error:
+					'Algo deu errado, por favor tente novamente, ou entre em contato com o suporte !',
+			});
+		}
 	}
 
 	async destroy({ params, response }) {
-		const treino = await Treino.findOrFail(params.id);
-		treino.delete();
-		return response.status(200).send();
+		try {
+			const treino = await Treino.findOrFail(params.id);
+			treino.delete();
+			return response.status(200).send();
+		} catch (error) {
+			return response.status(400).json({
+				error:
+					'Algo deu errado, por favor tente novamente, ou entre em contato com o suporte !',
+			});
+		}
 	}
 }
 
